@@ -52,14 +52,14 @@ The following configuration parameters can be set:
   * dbName (String)
   * dbUsername (String)
   * dbPassword (String)
-  * dbPort (Integer, defaults to 5432)  
-  * proxyUrl (String)    
-  * proxyPort (Integer, defaults to 8080)  
-  * downloadUrl (String)
+  * dbPort (Integer - optional, defaults to 5432)  
+  * proxyUrl (String - optional)    
+  * proxyPort (Integern - optional, defaults to 8080)  
+  * downloadUrl (String - optional)
 
-The proxyUrl & proxyPort used for accessing the postgreSQL installation download site through a proxy server, if, for instance, your local (corporate) intranet will only allow download through a proxy server.
+The proxyUrl & proxyPort are both optional and used for accessing the postgreSQL installation download site through a proxy server, if, for instance, your local (corporate) intranet will only allow download through a proxy server.
 
-The downloadUrl allows the user to specify a custom web location from which the postgresql-embedded-lib attempts to download and install the correct platorm/version of the PostgreSQL installation ZIP file (e.g. postgresql-9.2.4-1-windows-x64-binaries.zip or postgresql-9.2.4-1-osx-binaries.zip). It defaults to the public site "http://get.enterprisedb.com/postgresql/". But, as I experienced, if you are behind a Corp firewall, you may have some difficulties downloading that file, so you may wish to download the postgres installation files you need yourself, and place them on a local/internal server.
+The downloadUrl is an optional config param and it allows the user to specify a custom web location from which the postgresql-embedded-lib attempts to download and install the correct platorm/version of the PostgreSQL installation ZIP file (e.g. postgresql-9.2.4-1-windows-x64-binaries.zip or postgresql-9.2.4-1-osx-binaries.zip). It defaults to the public site "http://get.enterprisedb.com/postgresql/". But, as I experienced, if you are behind a Corp firewall, you may have some difficulties downloading that file, so you may wish to download the postgres installation files you need yourself, and place them on a local/internal server.
 
 ## Known Issues
 1. __Note:__ that there appears to be some issue with some confusing/incorrect maven console (Warnings) output when running a maven build that *uses* this plugin. This issue appears to be something caused by the use of the underlying [postgres-embedded Java library](https://github.com/yandex-qatools/postgresql-embedded) So, when the "stop" postgres action runs in the `post-integration-phase` you may see some console output like this:
