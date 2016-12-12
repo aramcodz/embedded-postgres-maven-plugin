@@ -1,8 +1,8 @@
 ## Synopsis
 
-The Embedded postgresql maven plugin supports creating of Integration tests in maven by starting up a postgresql instance/process in the pre-integration-test phase of the maven lifecycle and shuts down that same process in the post-integration-phase of the lifecycle. It depends upon the open-source [postgresql-embedded](https://github.com/yandex-qatools/postgresql-embedded) Java component.
+The Embedded postgresql maven plugin supports creating of Integration tests in maven by starting up a postgresql instance/process in the pre-integration-test phase of the maven lifecycle and shuts down that same process in the post-integration-phase of the lifecycle. It depends upon the open-source [postgresql-embedded-lib](https://github.com/aramcodz/postgresql-embedded-lib) Java component, which is fork of the [original postresql-embedded project](https://github.com/yandex-qatools/postgresql-embedded).
 
-This plugin has been compiled and tested with Java 1.7 and maven 3.3.9 and PostgreSQL 9.2.4 and PostgreSQL 9.3.6
+This plugin has been compiled and tested with Java 1.7 and maven 3.3.9 and PostgreSQL 9.2.4 and PostgreSQL 9.3.6.
 
 ## Notes on Usage
 
@@ -20,7 +20,7 @@ You use maven to compile this plugin and install it into your local maven reposi
 An example of using this plugin in the pom for your project (where you wish to use the plugin to set up your Integration tests):
 ```
       <plugin>
-        <groupId>com.ge.current.maven</groupId>
+        <groupId>com.smartmonkee.maven</groupId>
         <artifactId>embedded-postgres-maven-plugin</artifactId>
         <version>0.1.0</version>
         <executions>
@@ -37,10 +37,28 @@ An example of using this plugin in the pom for your project (where you wish to u
           <dbName>YOUR_DB_NAMWE</dbName>
           <dbUsername>YOUR_DB_USER_ACCOUNT</dbUsername>
           <dbPassword>YOUR_DB_PASSWORD</dbPassword>
-          <proxyUrl>http-proxy.appl.ge.com</proxyUrl> 
+          <proxyUrl>YOUR_PROXY_URL</proxyUrl> 
+          <dbPort>5432</dbPort>
+          <downloadUrl>YOUR_CUSTOM_POSTGRESQL_DOWNLOAD_URL}</downloadUrl>		  
         </configuration>        
       </plugin>  
 ``` 
+
+**Plugin Configuration Details:**
+The following configuration parameters can be set:
+  * skipExecution (boolean)
+  * postgresVersion (String, default="V9_3_6")
+  * dbURL (String, defaults to "localhost")    
+  * dbName (String)
+  * dbUsername (String)
+  * dbPassword (String)
+  * dbPort (Integer, defaults to 5432)  
+  * proxyUrl (String)    
+  * proxyPort (Integer, defaults to 8080)  
+  * downloadUrl (String)
+
+The proxyUrl & proxyPort used for accessing the potgres installation download site through a proxy server, if your local (corporate) intranet will only allow download through a proxy server.
+The downloadUrl allows the user to specify a custom web location from which the postgresql-embedded-lib attempts to download and install the correct platorm/version of the PostgreSQL installation files (e.g. postgresql-9.2.4-1-windows-x64-binaries.zip or postgresql-9.2.4-1-osx-binaries.zip). It details to the public site "http://get.enterprisedb.com/postgresql/". But, as I experienced, if you are behind a Corp firewall, you may have some difficulties downloading that file, so you may wish to download the postgres installation files you need yourself, and place them on a local/internal server.
 
 ## Known Issues
 1. __Note:__ that there appears to be some issue with some confusing/incorrect maven console (Warnings) output when running a maven build that *uses* this plugin. This issue appears to be something caused by the use of the underlying [postgres-embedded Java library](https://github.com/yandex-qatools/postgresql-embedded) So, when the "stop" postgres action runs in the `post-integration-phase` you may see some console output like this:
